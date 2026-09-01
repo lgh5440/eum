@@ -22,11 +22,33 @@
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  /* ===== eum_웹토큰_v1 (블루 미니멀 3D 카드형 디자인 시스템) — 파일럿 적용 =====
+     정본: D:\HONG\09_이음\01_부서\경영조정실\_디자인시스템\eum_웹토큰_v1.css (동일 값, 값 동기화 유지)
+     빌드 단계가 없는 정적 GitHub Pages 사이트라 외부 D:\ 경로 링크 대신 값을 인라인함. */
+  :root{
+    /* TIER1 PRIMITIVES */
+    --p-blue-main:#2F73F2; --p-blue-main-rgb:47,115,242;
+    --p-blue-deep:#1F5FD9; --p-blue-deep-rgb:31,95,217;
+    --p-blue-light:#6FA7FF; --p-blue-light-rgb:111,167,255;
+    --p-bg-white:#FFFFFF; --p-bg-gray-light:#F5F7FA; --p-bg-blue-pale:#EAF3FF; --p-bg-blue-panel:#DDEEFF;
+    --p-ink-900:#101A3D; --p-ink-700:#3A4568; --p-ink-500:#5C6A93;
+    --p-state-disabled-ink:#A7B2CE; --p-state-disabled-bg:#F3F6FC;
+    /* TIER2 SEMANTICS (전부 위 primitives 참조, 리터럴 없음) */
+    --primary-blue:var(--p-blue-main); --primary-blue-deep:var(--p-blue-deep); --primary-blue-light:var(--p-blue-light);
+    --primary-blue-rgb:var(--p-blue-main-rgb); --primary-blue-deep-rgb:var(--p-blue-deep-rgb);
+    --bg-page:var(--p-bg-blue-pale); --bg-surface:var(--p-bg-white); --bg-surface-muted:var(--p-bg-gray-light); --bg-panel:var(--p-bg-blue-panel);
+    --ink:var(--p-ink-900); --ink-secondary:var(--p-ink-700); --ink-tertiary:var(--p-ink-500); --ink-on-blue:var(--p-bg-white);
+    --state-disabled-ink:var(--p-state-disabled-ink); --state-disabled-bg:var(--p-state-disabled-bg);
+    --shadow-frame:0 30px 60px -26px rgba(var(--primary-blue-deep-rgb),.35);
+    --shadow-cta:0 14px 26px -12px rgba(var(--primary-blue-rgb),.5);
+    --shadow-soft:0 18px 30px rgba(var(--primary-blue-deep-rgb),.28);
+    --shadow-orb-inset: inset -5px -7px 12px rgba(var(--primary-blue-deep-rgb),.30), inset 3px 4px 7px rgba(255,255,255,.95), 0 12px 20px -8px rgba(var(--primary-blue-rgb),.5);
+  }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; min-height:100%; font-family:'Pretendard',-apple-system,sans-serif;
-    background:linear-gradient(180deg,#CFE6FF 0%,#EAF3FF 45%,#F8FBFF 100%);
+    margin:0; min-height:100%; font-family:var(--font-family-base,'Pretendard'),-apple-system,sans-serif;
+    background:linear-gradient(180deg,var(--bg-panel) 0%,var(--bg-page) 45%,var(--bg-surface) 100%);
     display:flex; justify-content:center; padding:56px 20px 70px; overflow-x:hidden;
   }
 
@@ -41,15 +63,15 @@
   @keyframes cdrift{ 0%,100%{transform:translateX(0)} 50%{transform:translateX(18px)} }
   @media (prefers-reduced-motion: reduce){ .cloud{animation:none} }
 
-  /* 무지개 테두리 프레임 */
+  /* 테두리 프레임 — 정본 §3 컬러 규칙 "무지개색 금지" 반영, 블루 톤 그라데이션으로 전면 교체 */
   .frame{
-    border-radius:32px; padding:3px;
-    background-image:linear-gradient(135deg, #FF9AD8, #FFD98C, #8CC7FF, #18DDEB, #B98CFF);
-    box-shadow:0 30px 60px -26px rgba(31,95,217,.35);
+    border-radius:var(--radius-xl,32px); padding:3px;
+    background-image:linear-gradient(135deg, var(--primary-blue-light), var(--primary-blue), var(--primary-blue-deep));
+    box-shadow:var(--shadow-frame);
   }
-  .card{ background:#fff; border-radius:29px; padding:38px 28px 28px; text-align:center; position:relative; overflow:hidden; }
+  .card{ background:var(--bg-surface); border-radius:var(--radius-lg,29px); padding:38px 28px 28px; text-align:center; position:relative; overflow:hidden; }
 
-  .cat{ font-size:12.5px; font-weight:700; color:#1F5FD9; letter-spacing:.03em; }
+  .cat{ font-size:var(--font-size-label,12.5px); font-weight:700; color:var(--primary-blue-deep); letter-spacing:.03em; }
 
   /* 천사 이미지 (실사진) */
   .angel-wrap{ display:flex; justify-content:center; margin:18px 0 10px; position:relative; }
@@ -59,57 +81,57 @@
     filter:blur(2px); z-index:0;
   }
   .angel{ position:relative; z-index:1; width:220px; height:auto; display:block;
-    filter:drop-shadow(0 18px 30px rgba(31,95,217,.28));
+    filter:drop-shadow(var(--shadow-soft));
     animation:fly 4.5s ease-in-out infinite; }
   @keyframes fly{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-14px);} }
   @media (prefers-reduced-motion: reduce){ .angel{animation:none} }
 
-  h1{ margin:0; font-size:26px; font-weight:800; letter-spacing:-.01em; color:#101A3D; }
-  .role{ margin:7px 0 0; font-size:14.5px; font-weight:600; color:#1F5FD9; }
-  .tagline{ margin:14px 0 0; font-size:13.5px; line-height:1.7; color:#5C6A93; }
+  h1{ margin:0; font-size:var(--font-size-title,26px); font-weight:var(--font-weight-title,800); letter-spacing:-.01em; color:var(--ink); }
+  .role{ margin:7px 0 0; font-size:var(--font-size-subtitle,14.5px); font-weight:600; color:var(--primary-blue-deep); }
+  .tagline{ margin:14px 0 0; font-size:var(--font-size-caption,13.5px); line-height:1.7; color:var(--ink-tertiary); }
 
-  .rule{ height:1px; background:#E5EEFB; margin:24px 0 20px; }
+  .rule{ height:1px; background:var(--bg-panel); margin:24px 0 20px; }
 
   .quick{ display:flex; gap:12px; justify-content:center; }
   .quick .item{ display:flex; flex-direction:column; align-items:center; gap:8px; }
   .quick a{ text-decoration:none; }
-  .quick .lb{ font-size:11.5px; font-weight:700; color:#182349; }
-  .orb{ position:relative; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle at 30% 26%, #ffffff, #EAF3FF 42%, #BFD9FF 76%, #8FB8FF 100%);
-    box-shadow: inset -5px -7px 12px rgba(31,95,217,.30), inset 3px 4px 7px rgba(255,255,255,.95), 0 12px 20px -8px rgba(47,115,242,.5);
+  .quick .lb{ font-size:11.5px; font-weight:700; color:var(--ink); }
+  .orb{ position:relative; width:56px; height:56px; border-radius:var(--radius-full,50%); display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 30% 26%, var(--bg-surface), var(--bg-page) 42%, var(--primary-blue-light) 76%, var(--primary-blue) 100%);
+    box-shadow: var(--shadow-orb-inset);
     transition:transform .16s ease;
   }
   .orb::after{ content:""; position:absolute; top:14%; left:22%; width:32%; height:22%; border-radius:50%; background:rgba(255,255,255,.85); filter:blur(2.5px); }
   .orb svg{ position:relative; z-index:1; width:24px; height:24px; }
   .item a:hover .orb{ transform:translateY(-3px); }
-  .item a:focus-visible .orb{ outline:2px solid #2F73F2; outline-offset:2px; }
+  .item a:focus-visible .orb{ outline:2px solid var(--primary-blue); outline-offset:2px; }
 
   .bio{ text-align:left; margin-bottom:20px; }
-  .bio-h{ margin:0 0 6px; font-size:11px; font-weight:700; color:#5C6A93; letter-spacing:.04em; }
-  .bio-tx{ margin:0; font-size:14.5px; line-height:1.65; color:#3A4568; }
+  .bio-h{ margin:0 0 6px; font-size:var(--font-size-small,11px); font-weight:700; color:var(--ink-tertiary); letter-spacing:.04em; }
+  .bio-tx{ margin:0; font-size:var(--font-size-body,14.5px); line-height:var(--line-height-body,1.65); color:var(--ink-secondary); }
 
   .apps{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
   .app-chip{
     flex:1; min-width:64px; display:flex; flex-direction:column; align-items:center; gap:5px;
-    text-align:center; text-decoration:none; color:#1F5FD9;
-    font-size:12px; font-weight:700; padding:12px 6px; border-radius:12px;
-    border:1px solid #D7E5FA; background:#F8FBFF; transition:transform .16s ease, border-color .16s ease;
+    text-align:center; text-decoration:none; color:var(--primary-blue-deep);
+    font-size:12px; font-weight:700; padding:12px 6px; border-radius:var(--radius-sm,12px);
+    border:1px solid var(--bg-panel); background:var(--bg-surface-muted); transition:transform .16s ease, border-color .16s ease;
   }
   .app-chip .aicon{ width:20px; height:20px; }
-  .app-chip small{ font-size:9.5px; font-weight:600; color:#4667B8; }
-  .app-chip:hover{ transform:translateY(-2px); border-color:#2F73F2; }
-  .app-chip:focus-visible{ outline:2px solid #2F73F2; outline-offset:2px; }
-  .app-chip.disabled{ color:#A7B2CE; background:#F3F6FC; cursor:default; }
-  .app-chip.disabled small{ font-size:9.5px; font-weight:600; }
+  .app-chip small{ font-size:var(--font-size-micro,9.5px); font-weight:600; color:var(--primary-blue); }
+  .app-chip:hover{ transform:translateY(-2px); border-color:var(--primary-blue); }
+  .app-chip:focus-visible{ outline:2px solid var(--primary-blue); outline-offset:2px; }
+  .app-chip.disabled{ color:var(--state-disabled-ink); background:var(--state-disabled-bg); cursor:default; }
+  .app-chip.disabled small{ font-size:var(--font-size-micro,9.5px); font-weight:600; }
 
   .cta{
     display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:22px;
-    padding:16px 18px; border:none; cursor:pointer; border-radius:16px;
-    font-family:inherit; font-size:15px; font-weight:700; color:#fff;
-    background:linear-gradient(135deg,#2F73F2,#1F5FD9); box-shadow:0 14px 26px -12px rgba(47,115,242,.5);
+    padding:16px 18px; border:none; cursor:pointer; border-radius:var(--radius-md,16px);
+    font-family:inherit; font-size:15px; font-weight:700; color:var(--ink-on-blue);
+    background:linear-gradient(135deg,var(--primary-blue),var(--primary-blue-deep)); box-shadow:var(--shadow-cta);
   }
   .cta:hover{ transform:translateY(-2px); }
-  .made{ margin-top:18px; font-size:12px; color:#5C6A93; }
+  .made{ margin-top:18px; font-size:12px; color:var(--ink-tertiary); }
 </style>
 
 <div class="cloud c1"><svg viewBox="0 0 200 90" width="180"><ellipse cx="60" cy="55" rx="55" ry="30" fill="#fff"/><ellipse cx="110" cy="40" rx="45" ry="34" fill="#fff"/><ellipse cx="150" cy="58" rx="40" ry="24" fill="#fff"/></svg></div>

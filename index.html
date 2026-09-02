@@ -199,3 +199,45 @@
     </div>
   </div>
 </div>
+
+<script>
+  const contactButton = document.querySelector('.cta');
+  const contactVCard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:이규홍;;;',
+    'FN:이규홍',
+    'ORG:이음(E:UM) 교육연구소',
+    'TITLE:교육연구소 대표',
+    'TEL;TYPE=CELL:01044305440',
+    'EMAIL;TYPE=INTERNET:lgh544092@gmail.com',
+    'URL:https://lgh5440.github.io/eum/',
+    'END:VCARD'
+  ].join('\r\n');
+
+  contactButton.addEventListener('click', async () => {
+    const filename = '이규홍-이음-연락처.vcf';
+    const blob = new Blob([contactVCard], { type: 'text/vcard;charset=utf-8' });
+    const downloadUrl = URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = filename;
+    downloadLink.click();
+    setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+
+    if (navigator.share && navigator.canShare) {
+      const shareFile = new File([blob], filename, { type: 'text/vcard' });
+      if (navigator.canShare({ files: [shareFile] })) {
+        try {
+          await navigator.share({
+            files: [shareFile],
+            title: '이규홍 · 이음(E:UM) 교육연구소',
+            text: '이음(E:UM) 교육연구소 연락처'
+          });
+        } catch (error) {
+          if (error.name !== 'AbortError') console.warn('연락처 공유를 완료하지 못했습니다.', error);
+        }
+      }
+    }
+  });
+</script>
